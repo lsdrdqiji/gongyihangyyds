@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        main: '#3b82f6',
+      }
+    }
+  }
+}
+</script>
+<style>
+*{font-family: system-ui,-apple-system,Segoe UI,Roboto}
+.thank-popup{
+  transition: all 0.4s ease;
+}
+.anim-bounce{
+  animation: bounce 0.6s ease;
+}
+@keyframes bounce{
+  0%{scale:0.6;opacity:0}
+  50%{scale:1.15}
+  100%{scale:1;opacity:1}
+}
+</style>
+</head>
+<body class="bg-slate-5 min-h-screen">
+<div class="max-w-xl mx-auto px-4 py-16">
+  <a href=" " class=" text-main mb-6 inline-block"><i class="fa fa-arrow-left"></i> 返回首页</a >
+  <div class="bg-white rounded-2xl p-8 shadow text-center">
+    <h1 class=" text-2xl font-bold mb-4">投我一票</h1>
+    <div class=" mb-6">
+      <div class=" text-slate-500">当前票数</div>
+      <div id="voteNum" class=" text-5xl font-bold text-main mt-1">5</div>
+    </div>
+    <button id="voteBtn" class=" bg-main text-white px-8 py-3 rounded-xl text-lg font-medium hover:bg-blue-700 transition">
+      <i class="fa fa-heart mr-2"></i> 投票支持
+    </button>
+  </div>
+</div>
+
+<!-- 感谢弹窗 -->
+<div id="popup" class=" thank-popup fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+  <div class=" bg-white p-10 rounded-2xl text-center anim-bounce max-w-[320px]">
+    <div class=" text-green-500 text-5xl mb-3"><i class="fa fa-check-circle"></i></div>
+    <h2 class=" text-xl font-bold mb-2">感谢你的支持！</h2>
+    <p class=" text-slate-500 mb-5">你的一票对我很重要</p >
+    <button onclick="closePop()" class=" px-6 py-2 bg-main text-white rounded-lg">好的</button>
+  </div>
+</div>
+
+<script>
+let num = 5;
+const dom = document.getElementById('voteNum');
+const btn = document.getElementById('voteBtn');
+const pop = document.getElementById('popup');
+
+// 固定每2秒 +1票
+function autoAdd(){
+  setInterval(()=>{
+    num++;
+    dom.innerText = num;
+  }, 2000)
+}
+autoAdd()
+
+// 点击投票
+btn.onclick = function(){
+  num++;
+  dom.innerText = num;
+  pop.classList.remove('hidden');
+  pop.classList.add('flex');
+  btn.disabled = true;
+  btn.classList.add('opacity-50')
+}
+function closePop(){
+  pop.classList.add('hidden');
+  pop.classList.remove('flex');
+}
+</script>
+</body>
+</html>
